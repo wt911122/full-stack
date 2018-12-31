@@ -1,0 +1,29 @@
+html{
+    --comp-width: 95%;
+    --comp-margin: 8px 0;
+    --comp-large-width: 100%;
+}
+.comp-in-panel{
+    width: var(--comp-large-width);
+    margin: var(--comp-margin);
+}
+.panel-on-page{
+    width: var(--comp-width);
+}
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-horizontal-center{
+    .flex-center();
+    flex-direction: row;
+}
+.flex-vertical-center{
+    .flex-center();
+    flex-direction: column;
+}
+.all-in-one-page{
+    width: 100%;
+    height: 100%;
+}
