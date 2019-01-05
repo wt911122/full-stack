@@ -15,7 +15,8 @@ module.exports = {
     mode: 'development',
     resolve: {
         alias: {
-            vue: 'vue/dist/vue.js'
+            vue: 'vue/dist/vue.js',
+            '@': path.resolve(__dirname, '../client'),
         }
     },
     module: {
@@ -50,7 +51,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.(png|jpg|gif|svg|eot|woff|woff2|ttf)$/,
+                test: /\.(png|jpg|jpeg|gif|svg|eot|woff|woff2|ttf)$/,
                 use: [
                     {
                         loader: 'file-loader',
