@@ -7,7 +7,7 @@
             <v-ons-back-button v-else></v-ons-back-button>
         </div>
         <div class="center">
-            {{ title || username }}
+            {{ title || me.username }}
         </div>
         <div class="right">
             <v-ons-toolbar-button v-if="home">
@@ -20,7 +20,12 @@
     </v-ons-toolbar>
 </template>
 <script>
+import gql from 'graphql-tag'
+
 export default {
+    apollo: {
+        me: gql`{ me { username } }`
+    },
     props: {
         title: String,
         home: Boolean
@@ -28,34 +33,11 @@ export default {
     data() {
       // Simple query that will update the 'hello' vue property
       return {
-        username: undefined,
+        me: {},
       }
     },
-    created(){
-        if(!this.title)
-            this.getUser();
-    },
-    methods: {
-        getUser(){
-            const gpl = `{ me { username } }`;
-            fetch('/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    query: gpl
-                })
-            })
-            .then(r => r.json())
-            .then(({ data }) => {
-            console.log('data returned:', data)
-            this.username = data.me.username;
 
-            // Cookies.set('user', data.login, '24d');
-            });
-        },
+    methods: {
         addnewRecord(){
             this.$router.push({ name: 'step1'});
       }

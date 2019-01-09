@@ -1,13 +1,15 @@
 const User = require('./services');
 const jsonwebtoken = require('jsonwebtoken');
+const checkAuth = require('../../auth');
 module.exports = {
     Query: {
         // fetch the profile of currently authenticated user
-        async me (_, args, { user }) {
+        async me (_, args, { ctx, user }) {
             // make sure user is logged in
-            if (!user) {
-                throw new Error('You are not authenticated!')
-            }
+            checkAuth(ctx, user)
+            // if (!user) {
+            //     throw new Error('You are not authenticated!')
+            // }
             // const me = jsonwebtoken.decode(user, process.env.JWT_SECRET)
             // user is authenticated
             const t =  await User.getUser(user.id);

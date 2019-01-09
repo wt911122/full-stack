@@ -27,10 +27,12 @@ const server = new ApolloServer({
         // const user = getUser(token);
 
         // add the user to the context
+        // console.log(arguments)
         return {
+            ctx,
             user: ctx.state.user
         };
-      },
+    },
 });
 
 module.exports = server

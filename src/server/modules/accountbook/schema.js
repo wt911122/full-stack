@@ -3,10 +3,11 @@
 const typeDefs = `
     type ABRecord {
         id: ID!
-        category: String!
+        category: Category!
         content: String!
-        cost: Float
-        moodgrade: Float
+        cost: Float!
+        moodgrade: Float!
+        time: String
     }
     type ABRecordCollection {
         hasMore: Boolean!
@@ -17,12 +18,19 @@ const typeDefs = `
             """
             The number of results to show. Must be >= 1. Default = 20
             """
-            pageSize: Int
+            pageSize: Int!
             """
             If you add a cursor here, it will only return results _after_ this cursor
             """
-            page: Int
+            page: Int!
         ): ABRecordCollection!
+    }
+    extend type Mutation {
+        insertOneRecord (
+            category: Int!,
+            content: String!,
+            cost:Float!,
+            moodgrade: Float!): String
     }
 `;
 

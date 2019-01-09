@@ -10,10 +10,17 @@ const User = bookshelf.Model.extend({
 });
 const Accountbook = bookshelf.Model.extend({
     tableName: 'accountbook',
-    uuid: true
+    uuid: true,
+    category: function() {
+        return this.belongsTo(Category, 'category', 'id');
+    }
+});
+const Category = bookshelf.Model.extend({
+    tableName: 'category',
 })
 
 module.exports = {
     User,
-    Accountbook
+    Accountbook,
+    Category
 }

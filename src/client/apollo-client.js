@@ -1,7 +1,10 @@
 import { ApolloClient } from 'apollo-client'
+import { ApolloLink } from 'apollo-link';
+import { RetryLink } from 'apollo-link-retry';
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
+import errorhandlerLink from './apollolinks/errorhandler';
 
 
 export default function(Vue){
@@ -9,6 +12,11 @@ export default function(Vue){
         // You should use an absolute URL here
         uri: 'http://localhost:3000/graphql',
     });
+    const links = ApolloLink.from([
+        // RetryLink,
+        errorhandlerLink,
+        httpLink,
+    ])
 
     // Create the subscription websocket link
     // const wsLink = new WebSocketLink({
@@ -33,7 +41,7 @@ export default function(Vue){
 
     // Create the apollo client
     const apolloClient = new ApolloClient({
-        link: httpLink,
+        link: links,
         cache: new InMemoryCache(),
         connectToDevTools: true,
     });
@@ -44,6 +52,5 @@ export default function(Vue){
     const provider =  new VueApollo({
         defaultClient: apolloClient,
     });
-    console.log(provider)
     return provider;
-};
+}

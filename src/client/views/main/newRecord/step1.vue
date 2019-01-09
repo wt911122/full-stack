@@ -2,12 +2,12 @@
     <v-ons-page>
         <header-bar title="选择类型"/>
         <v-ons-list>
-            <v-ons-list-item v-for="item in items" :key="item.value" @click="toStep2(item)">
+            <v-ons-list-item v-for="item in Categories" :key="item.id" @click="toStep2(item)">
                 <div class="left">
                     <img class="list-item__thumbnail" :src="require('@/assets/kitty.jpeg')">
                 </div>
                 <div class="center">
-                    <span class="list-item__title"> {{ item.text }}</span><span class="list-item__subtitle">{{item.desc}}</span>
+                    <span class="list-item__title"> {{ item.name }}</span><span class="list-item__subtitle">{{item.describe}}</span>
                 </div>
             </v-ons-list-item>
         </v-ons-list>
@@ -15,34 +15,29 @@
 </template>
 <script>
 import header from '../../components/header.vue';
+import form from './form';
+import gql from 'graphql-tag';
 export default {
+    apollo: {
+        Categories: gql`{
+            Categories {
+                id
+                name
+                describe
+            }}`
+    },
     components: {
       'header-bar': header
     },
     data(){
         return {
-            items: [
-                {
-                    value: 'catering',
-                    text: '餐饮',
-                    desc: '吃的！'
-                },
-                {
-                    value: 'costume',
-                    text: '服饰',
-                    desc: '穿的！'
-                },
-                {
-                    value: 'service',
-                    text: '服务',
-                    desc: '你懂的！'
-                },
-            ],
+            Categories: [],
         }
     },
     methods: {
         toStep2(item){
-            this.$router.push({name: 'step2', query: { item: item.value }})
+            form.category = +item.id;
+            this.$router.push({name: 'step2'});
         }
     }
 }

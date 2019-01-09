@@ -6,13 +6,13 @@ import './style/global.less';
 import Vue from 'vue';
 import VueOnsen from 'vue-onsenui'; // This imports 'onsenui', so no need to import it separately
 
-// import useApollo from './apollo-client';
+import useApollo from './apollo-client';
 import router from './routes';
 import App from './App.vue';
 // import gql from "graphql-tag";
 Vue.config.productionTip = false;
 
-// const apolloProvider = useApollo(Vue);
+const apolloProvider = useApollo(Vue);
 Vue.use(VueOnsen);
 
 new Vue({
@@ -25,6 +25,7 @@ new Vue({
             document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
         }
     },
+    apolloProvider,
     template: '<App/>',
     components: { App }
 });

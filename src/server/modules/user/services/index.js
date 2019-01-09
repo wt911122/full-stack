@@ -10,7 +10,7 @@ const validateUser = async (username, password) => {
     const model = await getByUsername(username);
     if(!model)
         throw new Error('no such user')
-    const row = model.attributes;
+    const row = model.toJSON();
     const valid = await bcrypt.compare(password, row.password);
     if(!valid)
         throw new Error('invalid password');
@@ -20,7 +20,7 @@ const validateUser = async (username, password) => {
 const getUser = async (id) => {
     const model = await getById(id);
     if(model){
-        return _.omit(model.attributes, ['password']);
+        return _.omit(model.toJSON(), ['password']);
     }else{
         throw new Error('no such user id')
     }
